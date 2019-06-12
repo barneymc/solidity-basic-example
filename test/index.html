@@ -1,0 +1,104 @@
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Solidity Example</title>
+
+        <script language="javascript" type="text/javascript" src="web3.js"></script>
+    </head>
+    <body>
+        <h1>Use the javascript console and metamask to test your contract</h1>
+        <h2>Example</h2>
+        <script>
+            //REPLACE WITH GANACHE GUI CONTRACT ADDRESS
+            let address = '0x43f18Ab816d561d6863116736e61DCEe4b9Ab0E7'
+
+            //THIS CAN BE REPLACED LATER WITH ANY PROVIDER
+            if (typeof web3 !== 'undefined') {
+                web3 = new Web3(web3.currentProvider);
+            } 
+
+            web3.eth.getAccounts((err, acc)=> {
+                web3.eth.defaultAccount = acc[0];
+            });
+
+            let SimpleStorageInstance= new web3.eth.Contract([
+                {
+                "constant": true,
+                "inputs": [],
+                "name": "owner",
+                "outputs": [
+                    {
+                    "name": "",
+                    "type": "address"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function",
+                "signature": "0x8da5cb5b"
+                },
+                {
+                "constant": true,
+                "inputs": [],
+                "name": "amount",
+                "outputs": [
+                    {
+                    "name": "",
+                    "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function",
+                "signature": "0xaa8c217c"
+                },
+                {
+                "inputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "constructor",
+                "signature": "constructor"
+                },
+                {
+                "constant": false,
+                "inputs": [
+                    {
+                    "name": "_amount",
+                    "type": "uint256"
+                    }
+                ],
+                "name": "store",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function",
+                "signature": "0x6057361d"
+                },
+                {
+                "constant": true,
+                "inputs": [],
+                "name": "get",
+                "outputs": [
+                    {
+                    "name": "",
+                    "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function",
+                "signature": "0x6d4ce63c"
+                }
+            ],address, (err, callback) => {
+                    if(err) console.log(err);
+                }
+            );
+
+        </script>
+    </body>
+</html>
+
