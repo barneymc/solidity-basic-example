@@ -7,25 +7,34 @@
 
         <title>Solidity Example</title>
 
-        <script language="javascript" type="text/javascript" src="web3.js"></script>
+        <script language="javascript" type="text/javascript" src="web3.min.js"></script>
     </head>
     <body>
         <h1>Use the javascript console and metamask to test your contract</h1>
         <h2>Example</h2>
+        <p>> simpleStorageInstance.get( ( err, resp ) => { console.log(resp) } )</p>
+        <p>> simpleStorageInstance.store(5, ( err, resp ) => { console.log(resp) } )</p>
+        <h1>Or use these buttons below</h1>
+        <input type="number" id="amount"></input><button onclick="sendToStorage()">STORE</button>
+        <br><button onclick="getFromStorage()">GET</button>
         <script>
             //REPLACE WITH GANACHE GUI CONTRACT ADDRESS
-            let address = '0x43f18Ab816d561d6863116736e61DCEe4b9Ab0E7'
+            let address = '0x3468187929fb3E6d4697eAeC42ba19885ea6B1C4';
 
             //THIS CAN BE REPLACED LATER WITH ANY PROVIDER
-            if (typeof web3 !== 'undefined') {
-                web3 = new Web3(web3.currentProvider);
+            if (typeof web3 !== 'undefined') { 
+                web3 = new Web3(web3.currentProvider); 
             } 
+            else { 
+                // set the provider you want from Web3.providers 
+                web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545")); 
+            }
 
             web3.eth.getAccounts((err, acc)=> {
                 web3.eth.defaultAccount = acc[0];
             });
 
-            let SimpleStorageInstance= new web3.eth.Contract([
+            let SimpleStorageFactory = web3.eth.contract([
                 {
                 "constant": true,
                 "inputs": [],
@@ -93,10 +102,36 @@
                 "type": "function",
                 "signature": "0x6d4ce63c"
                 }
-            ],address, (err, callback) => {
+            ] , (err, callback) => {
                     if(err) console.log(err);
                 }
             );
+
+            let simpleStorageInstance = SimpleStorageFactory.at(address);
+
+            const getFromStorage = () => {
+                simpleStorageInstance.get( ( err, resp ) => {
+                    if(err){
+                        alert(`error: ${error}`);
+                    } 
+                    else {
+                        alert(`storage content is: ${resp}`); 
+                    } 
+                });
+            }
+
+            const sendToStorage = () => {
+                amount = document.getElementById("amount").value;
+                console.log(amount)
+                simpleStorageInstance.store( amount, ( err, resp ) => {
+                    if(err){
+                        alert(`error: ${err}`);
+                    } 
+                    else {
+                        alert(`storage succesful. tx: ${resp}`); 
+                    } 
+                });
+            }
 
         </script>
     </body>
