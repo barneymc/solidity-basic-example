@@ -4,18 +4,40 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href='http://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>
+        <link href='style.css' rel='stylesheet' type='text/css'>
 
         <title>Solidity Example</title>
 
         <script language="javascript" type="text/javascript" src="web3.js"></script>
     </head>
     <body>
-        <h1>Welcome to the test page for the SimpleStorage contract</h1>
-        <h2>Here you can use these buttons to interact with a deployed instance stored in the specified address</h2>
-        <input type="text" id="contract_address" style="width:25em;"></input><button onclick="updateContract()">UPDATE</button><br>
-        <p> Sending to contract stored in address: <b id="c_address_text"></b></p>
-        <input type="number" id="amount" style="width:5em;"></input><button onclick="sendToStorage()">STORE</button>
-        <br><button onclick="getFromStorage()">GET</button>
+        <div class="form-style-10">
+            <h1>Welcome to the test page for the SimpleStorage contract
+            <span>Here you can use these buttons to interact with a deployed instance stored in the specified address (check javascript console for transaction details)</span></h1>
+            <div class="section"><span>1</span>Input contract address</div>
+            <div class="inner-wrap">
+                <label>
+                    <input type="text" id="contract_address" style="width:28em;"></input>
+                    <button onclick="updateContract()">Update</button>
+                </label>
+                <label>Sending to contract stored in address: <b id="c_address_text"></b></label>
+            </div>
+            <div class="section"><span>2</span>Interact!</div>
+            <div class="section">SimpleStorage.store</div>
+            <div class="inner-wrap">
+                <label>
+                   Amount: <input type="number" id="amount" style="width:5em;"></input>
+                    <button onclick="sendToStorage()">Store</button>
+                </label>
+            </div>
+            <div class="section">SimpleStorage.get</div>
+            <div class="inner-wrap">
+                <label>
+                    <button onclick="getFromStorage()">Get</button>
+                </label>
+            </div>
+        </div>
         <script>
             let contract_address;
 
@@ -115,8 +137,13 @@
             
             const updateContract = () => {
                 let contract_address = document.getElementById("contract_address").value;
-                document.getElementById("c_address_text").innerHTML = contract_address;
-                simpleStorageInstance.options.address = contract_address;
+                try{ 
+                    simpleStorageInstance.options.address = contract_address;
+                    document.getElementById("c_address_text").innerHTML = contract_address;
+                }
+                catch(err){
+                    alert(err);
+                }
             }
         </script>
     </body>
