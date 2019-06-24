@@ -7,7 +7,7 @@
         <link href='http://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>
         <link href='style.css' rel='stylesheet' type='text/css'>
 
-        <title>Solidity Example</title>
+        <title>Solidity Basic Example</title>
 
         <script language="javascript" type="text/javascript" src="web3.js"></script>
     </head>
@@ -46,10 +46,13 @@
 
             let account;
 
+            // Using the first account of the provider to sign trasactions
             web3.eth.getAccounts().then(
                 accounts => account = accounts[0]
             );
 
+            // Instance of the Contract without address (it will be provided later)
+            // Change ABI object according to the deployed Contract
             const simpleStorageInstance = new web3.eth.Contract([
                 {
                 "constant": true,
@@ -120,12 +123,14 @@
                 }
             ]);
 
+            // Function to wrap the get() method call 
             const getFromStorage = () => {
                     simpleStorageInstance.methods.get().call().then(( resp ) => {
                         alert(`storage content is: ${resp}`); 
                     });
                 }
 
+            // Function to wrap the store() method call
             const sendToStorage = () => {
                 amount = document.getElementById("amount").value;
                 simpleStorageInstance.methods
@@ -135,6 +140,7 @@
                                     .then(receipt => console.log(receipt));
             }
             
+            // Function to change the contract object address
             const updateContract = () => {
                 let contract_address = document.getElementById("contract_address").value;
                 try{ 
