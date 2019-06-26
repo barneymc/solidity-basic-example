@@ -39,16 +39,11 @@
             </div>
         </div>
         <script>
+
             let contract_address;
 
             // use the given Provider, e.g in the browser with Metamask, or instantiate a new websocket provider
             const web3 = new Web3(Web3.givenProvider || 'ws://localhost:8546', null, {});
-
-            let account;
-
-            web3.eth.getAccounts().then(
-                accounts => account = accounts[0]
-            );
 
             const simpleStorageInstance = new web3.eth.Contract([
                 {
@@ -127,12 +122,14 @@
                 }
 
             const sendToStorage = () => {
-                amount = document.getElementById("amount").value;
-                simpleStorageInstance.methods
-                                    .store(amount)
-                                    .send({from: account})
-                                    .on('error', err => console.error(err))
-                                    .then(receipt => console.log(receipt));
+                web3.eth.getAccounts().then( accounts => {
+                    amount = document.getElementById("amount").value;
+                    simpleStorageInstance.methods
+                                .store(amount)
+                                .send({from: accounts[0]})
+                                .on('error', err => console.error(err))
+                                .then(receipt => console.log(receipt));
+                });
             }
             
             const updateContract = () => {
