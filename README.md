@@ -118,7 +118,7 @@ Once you accomplish you can start storing and retreiving data from the Blockchai
 
 ## Authors
 
-* **Santiago Bianco** - (https://gitlab.com/SB2202)
+* **Santiago Bianco** - (https://github.com/santibianco - https://www.linkedin.com/in/santiago-bianco)
 
 
 
