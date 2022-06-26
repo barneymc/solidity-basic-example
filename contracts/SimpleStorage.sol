@@ -1,5 +1,8 @@
 pragma solidity >=0.4.21 <0.6.0;
 
+//Barneymc added this comment here, to force recompile
+
+
 contract SimpleStorage {
   address public owner;
   uint public amount;
